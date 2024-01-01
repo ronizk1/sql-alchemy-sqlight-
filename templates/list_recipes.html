@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block title %}Recipe List{% endblock %}
+
+{% block content %}
+    <h2 class="mt-4">Recipe List</h2>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Ingredients</th>
+                <th>Prepare Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.id }}</td>
+                    <td>{{ recipe.name_of_recipe }}</td>
+                    <td>{{ recipe.ingredients }}</td>
+                    <td>{{ recipe.prepare_time }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_recipe', recipe_id=recipe.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('add_recipe') }}" class="btn btn-primary mt-3">Add a New Recipe</a>
+{% endblock %}
